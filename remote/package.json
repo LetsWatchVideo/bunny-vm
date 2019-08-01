@@ -1,0 +1,15 @@
+{
+  "name": "remote",
+  "version": "1.0.0",
+  "description": "",
+  "main": "remote.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "socket.io-client": "^2.2.0"
+  }
+}

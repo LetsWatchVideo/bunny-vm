@@ -1,6 +1,6 @@
-import io from 'socket.io-client';
-import jwt from 'jsonwebtoken';
-if (process.argv.length <= 2) {
+const io = require('socket.io-client');
+const jwt = require('jsonwebtoken');
+if(process.argv.length <= 2){
 	console.log(`Usage: ${__filename} container-hostname`);
 	process.exit(-1);
 }
@@ -35,24 +35,26 @@ function execShellCommand(cmd) {
 		});
 	});
 }
-   
-const socketIO = io();
+
+const server = require('http').createServer();
+const socketIO = io(server);
 
 socketIO
-.use((socket, next) => {
-	if(true) return null;
-	if(socket.handshake.query && socket.handshake.query.token){
-		jwt.verify(socket.handshake.query.token, 'SECRET_KEY', (err, decoded) => {
-			if (err) return next(new Error('Authentication error'));
-			socket.decoded = decoded;
-			next();
-		});
-	}else{
-		next(new Error('Authentication error'));
-	}
-})
-.on('connection', (socket) => {
-	socket.on('message', (data) => {
+.on('connection', async (socket) => {
+	socket
+	.use((socket, next) => {
+		if(true) return null;
+		if(socket.handshake.query && socket.handshake.query.token){
+			jwt.verify(socket.handshake.query.token, 'SECRET_KEY', (err, decoded) => {
+				if (err) return next(new Error('Authentication error'));
+				socket.decoded = decoded;
+				next();
+			});
+		}else{
+			next(new Error('Authentication error'));
+		}
+	})
+	.on('message', async (data) => {
 		console.log('Incoming message:', data);
 		if(!data || !data.action) console.error('Invalid data');
 		switch(data.action){
@@ -92,4 +94,4 @@ socketIO
 		}
 	});
 });
-io.listen(9002);
+server.listen(3000);
