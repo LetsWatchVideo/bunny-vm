@@ -1,11 +1,11 @@
 const io = require('socket.io-client');
 const jwt = require('jsonwebtoken');
 if(process.argv.length <= 2){
-	console.log(`Usage: ${__filename} container-hostname`);
+	console.log(`Usage: ${__filename} remote-server`);
 	process.exit(-1);
 }
 
-let hostname = process.argv[2];
+let remoteServer = process.argv[2];
 
 const mouse_web_to_xdo = {
 	[0]: 1,
@@ -36,24 +36,13 @@ function execShellCommand(cmd) {
 	});
 }
 
-const server = require('http').createServer();
-const socketIO = io(server);
+const socketIO = io(remoteServer || 'http://ws-remote.letswatch.video/', {
+	token: process.env.roomToken
+});
 
 socketIO
 .on('connection', async (socket) => {
 	socket
-	.use((socket, next) => {
-		if(true) return null;
-		if(socket.handshake.query && socket.handshake.query.token){
-			jwt.verify(socket.handshake.query.token, 'SECRET_KEY', (err, decoded) => {
-				if (err) return next(new Error('Authentication error'));
-				socket.decoded = decoded;
-				next();
-			});
-		}else{
-			next(new Error('Authentication error'));
-		}
-	})
 	.on('message', async (data) => {
 		console.log('Incoming message:', data);
 		if(!data || !data.action) console.error('Invalid data');
