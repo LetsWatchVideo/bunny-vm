@@ -36,7 +36,7 @@ function execShellCommand(cmd) {
 	});
 }
 
-const socketIO = io(remoteServer || 'http://ws-remote.letswatch.video/', {
+const socketIO = io(remoteServer || 'https://ws.letswatch.video/remote', {
 	token: process.env.roomToken
 });
 

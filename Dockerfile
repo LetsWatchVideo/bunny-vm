@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:jonathonf/ffmpeg-4 && \
     apt-get update && \
-    apt-get install -y ffmpeg alsa-utils pulseaudio xvfb xdotool wget
+    apt-get install -y ffmpeg alsa-utils pulseaudio xvfb xdotool wget git
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && apt install -y ./google-chrome-stable_current_amd64.deb \

@@ -8,5 +8,6 @@ Building
 
 Running
 -------
+To run this, you need to give the VM a name, and a valid token for remote control.
 
-`docker run --rm -it bunny-vm https://www.youtube.com/watch?v=IWrK7sXK3Vw rtmp://stream.local.guac.live/live/guac?token=`
+`docker run --rm -it bunny-vm correcthorsebatterystaple`
