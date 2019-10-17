@@ -5,7 +5,7 @@ if(process.argv.length <= 2){
 	process.exit(-1);
 }
 
-let remoteServer = process.argv[2];
+let remoteServer = process.argv[1];
 
 const mouse_web_to_xdo = {
 	[0]: 1,
@@ -37,7 +37,7 @@ function execShellCommand(cmd) {
 }
 
 const socketIO = io(remoteServer || 'https://ws.letswatch.video/remote', {
-	token: process.env.roomToken
+	password: process.env.roomPassword
 });
 
 socketIO
