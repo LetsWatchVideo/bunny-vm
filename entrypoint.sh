@@ -24,7 +24,7 @@ sleep 1
 echo "Capturing with FFmpeg"
 cd ./capturer
 mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
-url=$1 roomName=$2 jwtToken=$3 capturer.js &
+url=$1 roomName=$2 jwtSecret=$3 roomPassword=$4 capturer.js &
 
 cd ..
 

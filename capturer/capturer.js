@@ -1,7 +1,10 @@
 const { spawn } = require('child_process');
 const { sign } = require('jwt');
 if(!process.env.jwtSecret) process.exit(0);
-let token = sign({name: roomName}, process.env.jwtSecret);
+let token = sign({
+	name: process.env.roomName,
+	password: process.env.roomPassword
+}, process.env.jwtSecret);
 spawn('ffmpeg', [
 	'-use_wallclock_as_timestamps', '1',
 	'-thread_queue_size', '512',
